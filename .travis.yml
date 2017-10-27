@@ -1,0 +1,15 @@
+services:
+- docker
+script:
+- docker build -t wtanaka/ubuntu-1604-oracle-java-9-zookeeper .
+- docker run wtanaka/ubuntu-1604-oracle-java-9-zookeeper bash -c "which /usr/lib/zookeeper/bin/cli_mt"
+after_success:
+- >
+  curl -H "Content-Type: application/json"
+  --data '{"source_type": "Branch", "source_name": "master"}'
+  -X POST
+  https://registry.hub.docker.com/u/wtanaka/ubuntu-1604-oracle-java-9-zookeeper/trigger/d054346a-cdc3-4ddc-909f-580349b36c3c/
+notifications:
+  email:
+    recipients:
+      secure: g1/3znZJ90oNfkyild80dG3ZrQEWE36DyPak+wDkKQ8zC8lBnyWExtilEMmTtgIlRYP9henYf1TK82Z1IXi1uDYhd1+XKIINKHdqnHJpd6RYkxKfMob4fXKuDdimR7CG/Ktdd6YDtSfKc5W7pNCmAEuW8JkwjIoB/GqXpUEkUQ3ZJtOwsV8/gzTD5GIZXft7Xdf3lAdgj1GCcDZNUFP3qCV62boTO0znuwT6oAwPx15JO+VxxNuG/t+Fwi76LTJU6sxFBv+yUTMxUirvzr/IM426ZIxRsvFx8QZhdjEh629LpR2uEkpqgnyjKwlQMdXs7B+VwbfvO4ENXZkdx4QaKWWutl0VGaGXalfi0SpzW9tV+YHoE0QfaUmo5JpAxLJpwWxUZC9/F3lwVFbv80rGuyvEQjWwUY3+I10FvLQ6jnEO0zivEKIO3VNlxkopWMB3bzqj9n493opIbkk17l4VUiLM81PY9qd7AXpdvgc1ujbX5LWG2aigJ7zm5TARReFwYGNPImBUQLHeVSi7ui2fgPozWs3gWZZ+lxLolzmcJNKNIks16X5hOXFsjo1eNicsdAqndU8Mrpc3MBTzChfACV1X5mSXW/slbJaDxgHh9iyy8weqJoOlQ/w7xLNEtdPPPCkCIjCnPJNEnMJwhSEBEHxlXxOi3lxkneh8odrG158=
